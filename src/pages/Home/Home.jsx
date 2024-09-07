@@ -37,10 +37,10 @@ function Home() {
       </div>
 
       <div className="container shado">
-        <div className="border-b flex justify-between items-center px-3 py-5 bg-white w-100 mt-8 rounded-t-[26px] border h-[100%]">
+        <div className="border-b flex flex-col justify-between items-center px-3 py-5 bg-white w-100 mt-8 rounded-t-[26px] border h-[100%]">
           <h1 className="text-xl">Data karyawan</h1>
           <h1
-            className="text-md bg-blue-400 px-2 py-1 rounded-md text-white"
+            className="text-md bg-blue-400 mt-2 px-2 py-1 rounded-md text-white"
             onClick={() => Navigate("/addUser")}
           >
             Tambah karyawan baru
@@ -50,20 +50,22 @@ function Home() {
           <thead>
             <tr className="bg-gray-50">
               <th className="py-3 px-6 text-left">Nama</th>
-              <th className="py-3 px-6 text-left">NIK</th>
-              <th className="py-3 px-6 text-center">Email</th>
               <th className="py-3 px-6 text-center">Detail</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => {
               return (
-                <tr>
-                  <td className="py-3 px-6 text-left">{user.name}</td>
-                  <td className="py-3 px-6 text-left">{user.nik}</td>
-                  <td className="py-3 px-6 text-center">{user.email}</td>
+                <tr className="border-b-2">
+                  <td className="py-3 px-6 text-left">
+                    <div className="flex flex-col">
+                      <span>Nama : {user.name}</span>
+                      <span>NIK : {user.nik}</span>
+                      <span>Email : {user.nik}</span>
+                    </div>
+                  </td>
                   <td
-                    className="py-3 px-6 text-center flex justify-center cursor-pointer"
+                    className="py-3 px-6 text-center h-[120px] flex items-center justify-center cursor-pointer"
                     onClick={() => Navigate("/detailUser/" + user.id)}
                   >
                     <MdOutlineRemoveRedEye size={20} />
