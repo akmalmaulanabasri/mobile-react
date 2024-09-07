@@ -1,73 +1,78 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Order from "./Order";
+import User from "./User";
 import { useNavigate } from "react-router-dom";
+import {
+  MdLogout,
+  MdOutlineLogin,
+  MdOutlineRemoveRedEye,
+} from "react-icons/md";
+import Swal from "sweetalert2";
 
 function Home() {
   const Navigate = useNavigate();
-  const [user, setUser] = useState({
-    name: "user",
-    email: "",
-    role: "",
-  });
-  const apiUrl = "https://be.wikrama.shop/api/v1";
-  const handleLogout = () => {
-    sessionStorage.removeItem("auth_token");
-    window.location.reload();
-  };
+  const [users, setUsers] = useState([]);
+  const apiUrl = "https://api-karyawan.dytech.my.id/api";
 
   useEffect(() => {
     axios
-      .get(`${apiUrl}/auth/me`, {
-        headers: {
-          "auth-token": sessionStorage.getItem("auth_token"),
-        },
-      })
+      .get(`${apiUrl}/users`)
       .then((res) => {
-        setUser(res.data);
+        setUsers(res.data.data);
+        console.log(users);
       })
       .catch((err) => {
-        console.log(err.response);
-        if (err.response.status === 401) {
-          sessionStorage.removeItem("auth_token");
-          window.location.reload();
-          console.log("401");
-        }
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err,
+        });
       });
-    console.log(user);
   }, []);
   return (
     <>
-      <div className="p-5 container h-[200px]  bg-gradient-to-r from-indigo-600 to-blue-400 rounded-bl-[20px] rounded-br-[20px]">
+      <div className="p-5 container h-[100px]  bg-gradient-to-r from-indigo-600 to-blue-400">
         <h1 className="text-2xl text-white">Hello, Admin</h1>
-        <h1 className="text-1xl text-white">Transaksi hari ini</h1>
-        <h1 className="text-5xl text-white mt-3 font-extrabold">Rp50.000</h1>
-
-        <div className="w-[100%] flex items-center justify-evenly h-[68px] relative bg-white rounded-[10px] shadow translate-y-[50%]">
-          <div className="text-center text-blue-800 text-[11px] font-medium">
-            Top Up
-          </div>
-          <div
-            className="text-center text-blue-800 text-[11px] font-medium"
-            onClick={() => Navigate("/order")}
-          >
-            New Order
-          </div>
-          <div className="text-center text-blue-800 text-[11px] font-medium">
-            Account
-          </div>
-        </div>
+        <h1 className="text-1xl text-white">Selamat datang di PT DYTECH</h1>
       </div>
 
       <div className="container shado">
-        <div className="border-b flex justify-between items-center px-3 py-5 bg-white w-100 mt-16 rounded-t-[26px] border h-[100%]">
-          <h1 className="text-xl">Recent Transaction</h1>
-          <h1 className="text-md">See All</h1>
+        <div className="border-b flex justify-between items-center px-3 py-5 bg-white w-100 mt-8 rounded-t-[26px] border h-[100%]">
+          <h1 className="text-xl">Data karyawan</h1>
+          <h1
+            className="text-md bg-blue-400 px-2 py-1 rounded-md text-white"
+            onClick={() => Navigate("/addUser")}
+          >
+            Tambah karyawan baru
+          </h1>
         </div>
-        <div className="p-3">
-          <span className="text-md">Today</span>
-          <Order />
-        </div>
+        <table className="min-w-full bg-white">
+          <thead>
+            <tr className="bg-gray-50">
+              <th className="py-3 px-6 text-left">Nama</th>
+              <th className="py-3 px-6 text-left">NIK</th>
+              <th className="py-3 px-6 text-center">Email</th>
+              <th className="py-3 px-6 text-center">Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => {
+              return (
+                <tr>
+                  <td className="py-3 px-6 text-left">{user.name}</td>
+                  <td className="py-3 px-6 text-left">{user.nik}</td>
+                  <td className="py-3 px-6 text-center">{user.email}</td>
+                  <td
+                    className="py-3 px-6 text-center flex justify-center cursor-pointer"
+                    onClick={() => Navigate("/detailUser/" + user.id)}
+                  >
+                    <MdOutlineRemoveRedEye size={20} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );
