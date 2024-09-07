@@ -54,25 +54,26 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
-              return (
-                <tr className="border-b-2">
-                  <td className="py-3 px-6 text-left">
-                    <div className="flex flex-col">
-                      <span>Nama : {user.name}</span>
-                      <span>NIK : {user.nik}</span>
-                      <span>Email : {user.nik}</span>
-                    </div>
-                  </td>
-                  <td
-                    className="py-3 px-6 text-center h-[120px] flex items-center justify-center cursor-pointer"
-                    onClick={() => Navigate("/detailUser/" + user.id)}
-                  >
-                    <MdOutlineRemoveRedEye size={20} />
-                  </td>
-                </tr>
-              );
-            })}
+            {users &&
+              users.map((user) => {
+                return (
+                  <tr className="border-b-2">
+                    <td className="py-3 px-6 text-left">
+                      <div className="flex flex-col">
+                        <span>Nama : {user.name}</span>
+                        <span>NIK : {user.nik}</span>
+                        <span>Email : {user.nik}</span>
+                      </div>
+                    </td>
+                    <td
+                      className="py-3 px-6 text-center h-[120px] flex items-center justify-center cursor-pointer"
+                      onClick={() => Navigate("/detailUser/" + user.id)}
+                    >
+                      <MdOutlineRemoveRedEye size={20} />
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
