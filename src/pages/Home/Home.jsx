@@ -59,7 +59,7 @@ function Home() {
                 return (
                   <tr className="border-b-2">
                     <td className="py-3 px-6 text-left">
-                      <div className="flex flex-col">
+                     <div className="flex flex-col">
                         <span>Nama : {user.name}</span>
                         <span>NIK : {user.nik}</span>
                         <span>Email : {user.nik}</span>

@@ -142,7 +142,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {task ? (
+            {task != 500 &&
               task.map((task) => {
                 return (
                   <tr>
@@ -161,14 +161,7 @@ function Home() {
                     </td>
                   </tr>
                 );
-              })
-            ) : (
-              <tr>
-                <td className="text-center bg-gray-400 text-white" colSpan={3}>
-                  No task
-                </td>
-              </tr>
-            )}
+              })}
           </tbody>
         </table>
       </div>
